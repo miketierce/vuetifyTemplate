@@ -3,7 +3,7 @@
           xl8
           offset-xl2>
     <span :to='"/"'
-          class="body-2">{{id}} > To Here</span>
+          class="body-2">{{id}} > From Here > To Here </span>
   </v-flex>
 </template>
 
