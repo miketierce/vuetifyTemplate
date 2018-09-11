@@ -150,7 +150,7 @@ export default new Vuex.Store({
       return (postId) => {
         console.log(postId)
         return state.loadedPosts.find((post) => {
-          return post.id == postId
+          return post.id === postId
         })
       }
     }
