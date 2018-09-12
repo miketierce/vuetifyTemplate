@@ -13,7 +13,7 @@
                alt="">
         </div>
         <div class="title mb-5 ">
-          Coming Soon
+          Coming Soon...
         </div>
       </v-flex>
 
