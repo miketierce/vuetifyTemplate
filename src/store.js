@@ -114,7 +114,7 @@ export default new Vuex.Store({
       VideoUrl: 'https://youtu.be/YG7Bgxn2Ysw',
       SeriesTitle: 'Series Title',
       EpisodeTitle: 'Episode Title',
-      RunTime: '32 minutes'
+      RunTime: '32 minutess'
     }, {
       description: 'loreum epsum',
       id: 19,
