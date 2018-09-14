@@ -5,6 +5,7 @@
       <v-layout row
                 align-content-center
                 class="horiz-scroll">
+
         <v-flex v-for="item in SeriesContent"
                 :key="item.id"
                 px-2
