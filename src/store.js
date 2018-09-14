@@ -148,9 +148,9 @@ export default new Vuex.Store({
     },
     loadedPost (state) {
       return (postId) => {
-        console.log(postId)
+        // console.log(postId)
         return state.loadedPosts.find((post) => {
-          return post.id === postId
+          return post.id == postId
         })
       }
     }

@@ -38,10 +38,29 @@ export default {
 </script>
 
 <style>
+.rounded {
+  border-radius: 5px; /* 5px rounded corners */
+}
+.pos-relative {
+  position: relative;
+  min-height: 150px;
+}
 .transparent {
   background-color: transparent !important;
 }
-
+.thumbText {
+  position: absolute;
+  /* top: 100px; */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  /* font-size: 1em; */
+  /* padding: 20px; */
+  width: 100%;
+  /* height: 100%; */
+  bottom: 0;
+  left: 0;
+  font-family: "Roboto";
+}
 .card-image {
   display: block;
 }
@@ -59,6 +78,7 @@ export default {
   .container {
     padding-left: 0;
     padding-right: 0;
+    padding-bottom: 50px;
   }
   .episode-title {
     font-size: 14px;
@@ -123,7 +143,7 @@ export default {
 ::-webkit-scrollbar {
   background: #eeeeee;
   width: 5px;
-  height: 5px;
+  height: 0px;
 }
 ::-webkit-scrollbar-button {
   width: 0px;

@@ -10,14 +10,14 @@
                 offset-xl2>
           <v-card fluid
                   height="auto"
-                  class="transparent">
+                  class="transparent rounded">
             <vue-media-embed :source="CourseContent.VideoUrl"
                              :auto-play="0"
                              :allow-fullscreen="1" />
           </v-card>
           <v-card flat
                   class="grey lighten-3 headline">
-            <div class="episode-title">
+            <div class="episode-title text-truncate">
               {{CourseContent.EpisodeTitle}}
             </div>
           </v-card>
@@ -153,7 +153,7 @@ export default {
   },
   computed: {
     CourseContent () {
-      console.log(this.$store.getters.loadedPosts)
+      console.log(this.id)
       return this.$store.getters.loadedPost(this.id)
     }
   }

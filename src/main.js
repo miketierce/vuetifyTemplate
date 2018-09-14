@@ -5,6 +5,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import VueMediaEmbed from 'vue-media-embed'
+import VueDragscroll from 'vue-dragscroll'
+
+Vue.directive(VueDragscroll)
 
 Vue.use(VueMediaEmbed, {
   store

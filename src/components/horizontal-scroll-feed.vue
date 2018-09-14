@@ -13,16 +13,20 @@
           <div class="pos-relative">
             <v-card width="200px"
                     height="auto"
+                    class="rounded"
                     raised
                     ripple
                     hover
+                    elevation-12
                     :to="'/theatre/view/'+ media.id">
-              <v-card-media height="100px"
-                            :src="media.src">
+              <v-img height="125px"
+                     :src="media.src"
+                     class="pos-relative rounded ">
+                <v-spacer></v-spacer>
+                <div class="thumbText text-xs-left pl-1 subheading text--white">{{ media.name }}</div>
+              </v-img>
 
-              </v-card-media>
-
-              <div fill-height
+              <!-- <div fill-height
                    fluid>
                 <v-layout fill-height>
                   <v-flex xs12>
@@ -37,7 +41,7 @@
 
                   </v-flex>
                 </v-layout>
-              </div>
+              </div> -->
 
               <v-slide-y-transition>
                 <v-card flat
