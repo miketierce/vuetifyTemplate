@@ -5,9 +5,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import VueMediaEmbed from 'vue-media-embed'
-import VueDragscroll from 'vue-dragscroll'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 
-Vue.directive(VueDragscroll)
+// require styles
+import 'swiper/dist/css/swiper.css'
+
+Vue.use(VueAwesomeSwiper)
 
 Vue.use(VueMediaEmbed, {
   store

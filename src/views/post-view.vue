@@ -84,24 +84,17 @@
           </v-tabs-items>
         </div>
       </v-flex>
+
+      <v-layout row
+                wrap
+                class="grey lighten-3 pb-5"
+                fill-height>
+
+        <FooterContent />
+
+      </v-layout>
     </v-container>
-    <v-layout row
-              wrap
-              class="grey lighten-3">
-      <v-flex xs12
-              class="mt-2">
-        <v-flex xs12
-                xl8
-                offset-xl2>
-        </v-flex>
-        <feed />
-      </v-flex>
-    </v-layout>
-    <v-layout row
-              wrap
-              class="grey lighten-3">
-      <FooterContent />
-    </v-layout>
+
   </v-content>
 </template>
 
@@ -111,6 +104,7 @@ import notepad from '@/components/notepad.vue'
 import FooterContent from '@/components/footer.vue'
 import breadcrumbs from '@/components/breadcrumbs.vue'
 import VueSticky from 'vue-sticky' // Es6 module
+import swiper from '@/components/swiper.vue'
 
 export default {
   props: ['id'],
@@ -122,7 +116,8 @@ export default {
     notepad,
     breadcrumbs,
     VueSticky,
-    FooterContent
+    FooterContent,
+    swiper
   },
   data () {
     return {

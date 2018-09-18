@@ -38,6 +38,9 @@ export default {
 </script>
 
 <style>
+.container {
+  /* overflow: hidden; */
+}
 .rounded {
   border-radius: 5px; /* 5px rounded corners */
 }
@@ -143,11 +146,11 @@ export default {
 ::-webkit-scrollbar {
   background: #eeeeee;
   width: 5px;
-  height: 0px;
+  height: 10px;
 }
 ::-webkit-scrollbar-button {
   width: 0px;
-  height: 0px;
+  height: 5px;
 }
 ::-webkit-scrollbar-thumb {
   background: #757575;

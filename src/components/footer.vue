@@ -1,58 +1,170 @@
 <template>
   <v-content>
     <v-container fluid
-                 class="grey lighten-3">
+                 fill-height>
       <v-layout row
-                align-content-center
-                class="horiz-scroll">
+                wrap
+                fill-height>
+        <v-flex xs12>
+          <h2>Up Next</h2>
 
-        <v-flex v-for="item in SeriesContent"
-                :key="item.id"
-                px-2
-                pb-5
-                pt-2>
-          <div class="pos-relative">
-            <div class="">
-              <div class="tile">
-                <div class="">
-                  <img :src="item.src" />
-                  <div class="text"
-                       style="width: 100%;">
-                    <h1>{{item.name}}</h1>
-                    <h2 class="animate-text">{{item.description}}</h2>
-                    <v-btn absolute
-                           class=" dots transparent white--text"
-                           fab
-                           flat
-                           right
-                           top>
-                      <v-icon>more_vert</v-icon>
-                    </v-btn>
-                  </div>
-                </div>
-              </div>
+          <flickity ref="flickity"
+                    :options="flickityOptions"
+                    style="height:400px; overflow: visible;">
+
+            <!-- <div class="carousel-cell tile"
+               v-for="item in SeriesContent"
+               :key="item.id">
+            <img :src="item.src" />
+            <div class="text"
+                 style="width:100%;">
+              <h1 @click="goTo(item.id)">{{item.name}}</h1>
+              <h2 class="animate-text">{{item.description}}</h2>
+              <v-btn absolute
+                     class="dots transparent white--text"
+                     fab
+                     flat
+                     right
+                     top>
+                <v-icon>more_vert</v-icon>
+              </v-btn>
             </div>
-          </div>
+          </div> -->
+            <div class="carousel-cell mt-1 mb-5"
+                 v-for="item in SeriesContent"
+                 :key="item.id">
+
+              <v-hover>
+
+                <v-card slot-scope="{hover}"
+                        class=" elevation-5 rounded"
+                        width="300px"
+                        height="auto"
+                        hover>
+                  <v-responsive v-on:mouseover="active = !active"
+                                :aspect-ratio="16/9">
+                    <v-img :src="item.src"
+                           aspect-ratio="16/9"
+                           height="200px">
+                      <v-card-text class="white--text">
+                        This card will always be 16:9 (unless you put more stuff in it)
+                      </v-card-text>
+                    </v-img>
+                  </v-responsive>
+                  <v-expand-transition>
+                    <div v-if="hover"
+                         style="height: 200px"
+                         class="popup primary">
+
+                      <h2>Peak A Boo</h2>
+                    </div>
+                  </v-expand-transition>
+                </v-card>
+              </v-hover>
+            </div>
+          </flickity>
+
+          <!-- if you don't want to use the buttons Flickity provides -->
+          <!-- <button @click="previous()">Custom Previous Button</button>
+          <button @click="next()">Custom Next Button</button> -->
         </v-flex>
       </v-layout>
+
     </v-container>
   </v-content>
 
 </template>
 
 <script>
+import flickity from 'vue-flickity'
+
 export default {
+  components: {
+    flickity
+  },
+  data () {
+    return {
+      flickityOptions: {
+        initialIndex: 0,
+        prevNextButtons: true,
+        pageDots: false,
+        wrapAround: false,
+        setGallerySize: true,
+        freeScroll: true,
+        contain: true,
+        adaptiveHeight: true
+        // any options from Flickity can be used
+      }
+    }
+  },
+  methods: {
+
+    next () {
+      this.$refs.flickity.next()
+    },
+
+    previous () {
+      this.$refs.flickity.previous()
+    }
+  },
   computed: {
     SeriesContent () {
-      console.log(this.id)
+      // console.log(this.id)
       return this.$store.getters.loadedPosts
+    },
+    displayedPosts () {
+      // console.log(this.displayedPosts)
+      return this.paginate(this.SeriesContent)
     }
   }
-
 }
 </script>
 
 <style scoped>
+.popup {
+  -webkit-transition: opacity 3s ease-in-out;
+  -moz-transition: opacity 3s ease-in-out;
+  -ms-transition: opacity 3s ease-in-out;
+  -o-transition: opacity 3s ease-in-out;
+}
+.carousel {
+  height: 160px;
+}
+.carousel-cell {
+  width: 250px;
+  height: auto;
+  margin: 10px;
+  margin-bottom: 100px;
+  background-color: #99aeff;
+  display: inline-block;
+  background-size: cover;
+  position: relative;
+  /* cursor: pointer; */
+  /* transition: all 0.4s ease-out; */
+  box-shadow: 0px 13px 50px -17px rgba(0, 0, 0, 0.44);
+  overflow: hidden;
+  color: white;
+  font-family: "Roboto";
+  border-radius: 5px; /* 5px rounded corners */
+}
+
+.carousel-cell:hover {
+  background-color: #99aeff;
+  box-shadow: 0px 23px 77px -17px rgba(0, 0, 0, 0.64);
+
+  /* height: 300px !important; */
+
+  /* transition: all 0.1s ease-in; */
+  /* transform: scale(1, 1.5); */
+  /* transform-origin: top; */
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 0px;
+}
+.tile:hover img {
+  opacity: 0.2;
+}
+
 .crop {
   width: 250px;
   height: 175px;
@@ -75,7 +187,8 @@ export default {
 .tile {
   width: 250px;
   height: 175px;
-  margin: 0px;
+  margin: 10px;
+  margin-bottom: 100px;
   background-color: #99aeff;
   display: inline-block;
   background-size: cover;
@@ -130,7 +243,8 @@ export default {
 .tile:hover {
   background-color: #99aeff;
   box-shadow: 0px 23px 77px -17px rgba(0, 0, 0, 0.64);
-  transform: scale(1.05);
+  transform: scale(1, 1.5);
+  transform-origin: top;
   border-radius: 5px; /* 5px rounded corners */
 }
 .tile:hover img {
