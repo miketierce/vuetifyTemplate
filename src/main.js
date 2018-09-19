@@ -6,9 +6,11 @@ import router from './router'
 import store from './store'
 import VueMediaEmbed from 'vue-media-embed'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-
+import vueScrollto from 'vue-scrollto'
 // require styles
 import 'swiper/dist/css/swiper.css'
+
+Vue.use(vueScrollto)
 
 Vue.use(VueAwesomeSwiper)
 

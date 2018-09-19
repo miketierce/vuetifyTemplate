@@ -2,23 +2,24 @@
   <v-content>
     <v-container>
       <breadcrumbs v-bind:id="id"
-                   class="breadcrumb" />
+                   class="breadcrumb" /> {{videoId}}
       <v-layout row
                 wrap>
         <v-flex xs12
                 xl8
                 offset-xl2>
-          <v-card fluid
+          <v-card id="player"
+                  fluid
                   height="auto"
                   class="transparent rounded">
-            <vue-media-embed :source="CourseContent.VideoUrl"
+            <vue-media-embed :source="'youtube://' + CourseContent.contentDetails.videoId"
                              :auto-play="0"
                              :allow-fullscreen="1" />
           </v-card>
           <v-card flat
                   class="grey lighten-3 headline">
             <div class="episode-title text-truncate">
-              {{CourseContent.EpisodeTitle}}
+              {{CourseContent.snippet.title}}
             </div>
           </v-card>
         </v-flex>
@@ -57,9 +58,8 @@
                           :key="n.id">
                 <div class="mt-2 mr-2 ml-2"
                      v-show="n.id === 'details'">
-                  <h3>Course Details</h3>
                   <span>
-                    {{n.text}}
+                    {{CourseContent.snippet.description}}
                   </span>
                 </div>
                 <div class="mt-2 mr-2 ml-2">
@@ -108,6 +108,11 @@ import swiper from '@/components/swiper.vue'
 
 export default {
   props: ['id'],
+  // mounted () {
+  //   this.$watch('id', id => {
+  //     this.videoLoad(id)
+  //   }, { immediate: true })
+  // },
   directives: {
     'sticky': VueSticky
   },
@@ -119,9 +124,16 @@ export default {
     FooterContent,
     swiper
   },
+  watch: {
+    $route (to, from) {
+      this.videoId = this.CourseContent.contentDetails.videoId
+      return this.$store.getters.loadedPost(this.id)
+    }
+  },
   data () {
     return {
       tabs: null,
+      videoId: '',
       TabContent: [
         {
           header: 'Details',

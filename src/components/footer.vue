@@ -6,7 +6,7 @@
                 wrap
                 fill-height>
         <v-flex xs12>
-          <h2>Up Next</h2>
+          <h1>Up Next</h1>
 
           <flickity ref="flickity"
                     :options="flickityOptions"
@@ -30,35 +30,64 @@
               </v-btn>
             </div>
           </div> -->
-            <div class="carousel-cell mt-1 mb-5"
+            <div class="carousel-cell mt-5 mb-5 mx-2"
                  v-for="item in SeriesContent"
                  :key="item.id">
 
               <v-hover>
 
                 <v-card slot-scope="{hover}"
-                        class=" elevation-5 rounded"
-                        width="300px"
-                        height="auto"
+                        class=" elevation-5 rounded "
+                        aspect-ratio="16/9"
+                        height="180px"
                         hover>
-                  <v-responsive v-on:mouseover="active = !active"
+                  <v-responsive @mouseover="active = true"
+                                @mouseleave="active = false"
                                 :aspect-ratio="16/9">
-                    <v-img :src="item.src"
+                    <v-img :src="item.snippet.thumbnails.medium.url"
                            aspect-ratio="16/9"
-                           height="200px">
-                      <v-card-text class="white--text">
-                        This card will always be 16:9 (unless you put more stuff in it)
-                      </v-card-text>
+                           height="180px">
+                      <!-- <transition name="fade">
+                        <v-layout v-if="hover"
+                                  row
+                                  wrap>
+                          <div class="text-xs-left white--text">
+                            <h2>{{item.name}}</h2>
+                          </div>
+                        </v-layout>
+                      </transition> -->
+                      <transition name="fade">
+                        <v-layout v-if="hover"
+                                  align-center
+                                  justify-center
+                                  row
+                                  fill-height
+                                  fluid>
+
+                          <div class="text-xs-center">
+                            <v-btn fab
+                                   dark
+                                   large
+                                   flat
+                                   @click="goTo(item.id)"
+                                   v-scroll-to="'#nav'">
+                              <v-icon class="text-xs-center"
+                                      dark
+                                      x-large>play_circle_filled</v-icon>
+                            </v-btn>
+                          </div>
+
+                        </v-layout>
+
+                      </transition>
+
                     </v-img>
                   </v-responsive>
-                  <v-expand-transition>
-                    <div v-if="hover"
-                         style="height: 200px"
-                         class="popup primary">
-
-                      <h2>Peak A Boo</h2>
+                  <transition name="fade">
+                    <div v-if="hover">
+                      <h2>{{item.name}}</h2>
                     </div>
-                  </v-expand-transition>
+                  </transition>
                 </v-card>
               </v-hover>
             </div>
@@ -84,12 +113,13 @@ export default {
   },
   data () {
     return {
+      active: false,
       flickityOptions: {
         initialIndex: 0,
         prevNextButtons: true,
         pageDots: false,
         wrapAround: false,
-        setGallerySize: true,
+        setGallerySize: false,
         freeScroll: true,
         contain: true,
         adaptiveHeight: true
@@ -105,6 +135,9 @@ export default {
 
     previous () {
       this.$refs.flickity.previous()
+    },
+    goTo (post) {
+      this.$router.push({ name: 'postView', params: { id: post } })
     }
   },
   computed: {
@@ -121,21 +154,24 @@ export default {
 </script>
 
 <style scoped>
-.popup {
-  -webkit-transition: opacity 3s ease-in-out;
-  -moz-transition: opacity 3s ease-in-out;
-  -ms-transition: opacity 3s ease-in-out;
-  -o-transition: opacity 3s ease-in-out;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 .carousel {
-  height: 160px;
+  height: 100px;
+  margin: 0px;
 }
 .carousel-cell {
-  width: 250px;
-  height: auto;
-  margin: 10px;
-  margin-bottom: 100px;
-  background-color: #99aeff;
+  width: 300px;
+  /* height: 100px; */
+  /* margin: 0 10px; */
+  /* margin: 10px; */
+
+  background-color: rgba(0, 0, 0, 0);
   display: inline-block;
   background-size: cover;
   position: relative;
@@ -149,17 +185,15 @@ export default {
 }
 
 .carousel-cell:hover {
-  background-color: #99aeff;
-  box-shadow: 0px 23px 77px -17px rgba(0, 0, 0, 0.64);
-
-  /* height: 300px !important; */
-
+  background-color: white;
+  box-shadow: 0px 23px 77px -17px rgba(0, 0, 0, 0) !important;
+  /* height: 100% !important; */
+  height: 300px !important;
+  transform: translateY(-10%);
   /* transition: all 0.1s ease-in; */
   /* transform: scale(1, 1.5); */
   /* transform-origin: top; */
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 0px;
+  border-radius: 5px;
 }
 .tile:hover img {
   opacity: 0.2;
