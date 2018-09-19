@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <breadcrumbs v-bind:id="id"
-                   class="breadcrumb" /> {{videoId}}
+                   class="breadcrumb" />
       <v-layout row
                 wrap>
         <v-flex xs12
@@ -12,9 +12,10 @@
                   fluid
                   height="auto"
                   class="transparent rounded">
-            <vue-media-embed :source="'youtube://' + CourseContent.contentDetails.videoId"
+            <!-- <vue-media-embed :source="'youtube://' + CourseContent.contentDetails.videoId"
                              :auto-play="0"
-                             :allow-fullscreen="1" />
+                             :allow-fullscreen="1" /> -->
+            <playerWindow v-bind:id="id" />
           </v-card>
           <v-card flat
                   class="grey lighten-3 headline">
@@ -58,9 +59,12 @@
                           :key="n.id">
                 <div class="mt-2 mr-2 ml-2"
                      v-show="n.id === 'details'">
-                  <span>
+                  <div>
+                    {{CourseContent.contentDetails.videoId}}
+                  </div>
+                  <div>
                     {{CourseContent.snippet.description}}
-                  </span>
+                  </div>
                 </div>
                 <div class="mt-2 mr-2 ml-2">
                   <notepad v-show="n.id === 'notepad'" />
@@ -105,6 +109,7 @@ import FooterContent from '@/components/footer.vue'
 import breadcrumbs from '@/components/breadcrumbs.vue'
 import VueSticky from 'vue-sticky' // Es6 module
 import swiper from '@/components/swiper.vue'
+import playerWindow from '@/components/playerWindow.vue'
 
 export default {
   props: ['id'],
@@ -122,18 +127,18 @@ export default {
     breadcrumbs,
     VueSticky,
     FooterContent,
-    swiper
+    swiper,
+    playerWindow
   },
   watch: {
     $route (to, from) {
-      this.videoId = this.CourseContent.contentDetails.videoId
       return this.$store.getters.loadedPost(this.id)
     }
   },
   data () {
     return {
       tabs: null,
-      videoId: '',
+
       TabContent: [
         {
           header: 'Details',
@@ -159,9 +164,15 @@ export default {
     }
   },
   computed: {
-    CourseContent () {
-      console.log(this.id)
-      return this.$store.getters.loadedPost(this.id)
+    CourseContent: {
+      get: function () {
+        console.log(this.id)
+        return this.$store.getters.loadedPost(this.id)
+      },
+      set: function () {
+        this.CourseContent.contentDetails.videoId = this.$store.getters.loadedPost(this.id).contentDetails.videoId
+      }
+
     }
   }
 }

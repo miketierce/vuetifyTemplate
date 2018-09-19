@@ -7,6 +7,9 @@ import store from './store'
 import VueMediaEmbed from 'vue-media-embed'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import vueScrollto from 'vue-scrollto'
+import 'vue-plyr'
+import 'vue-plyr/dist/vue-plyr.css'
+
 // require styles
 import 'swiper/dist/css/swiper.css'
 
