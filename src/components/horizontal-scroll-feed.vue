@@ -94,7 +94,6 @@ export default {
 .tile img {
   height: 100%;
   width: 100%;
-  margin: 20px;
   border-radius: 5px;
   position: absolute;
   top: 0;

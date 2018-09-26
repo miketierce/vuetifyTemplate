@@ -1,10 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as firebase from 'firebase'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    clips: [],
+    clipTimestamp: {
+      timestamp: ''
+    },
+    clipDimensions: {
+      videoId: '',
+      clipTitle: '',
+      clippedStartTime: '',
+      clippedStopTime: '',
+      clipCalcStartTime: ''
+    },
     loadedPosts: [{
       'kind': 'youtube#playlistItem',
       'etag': '"XI7nbFXulYBIpL0ayR_gDh3eu1k/9HMdZkkdHtZumZsfvLpnSx1TBBI"',
@@ -183,12 +195,81 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-
+    setUser (state, payload) {
+      state.user = payload
+    },
+    storeClipTimestamp (state, payload) {
+      state.clipTimestamp = payload
+    },
+    storeVideoClip (state, payload) {
+      state.clipDimensions = payload
+      state.clips.push(payload)
+    },
+    storeVideoClipStop (state, payload) {
+      state.clipDimensions = payload
+    }
   },
   actions: {
-
+    videoTimestamp ({
+      commit
+    }, payload) {
+      const stamp = {
+        timestamp: payload.timestamp
+      }
+      commit('storeClipTimestamp', stamp)
+    },
+    stopClipVideo ({
+      commit
+    }, payload) {
+      const clip = {
+        // clipTitle: payload.clipTitle,
+        clippedStopTime: payload.clippedStopTime
+      }
+      console.log(clip)
+      commit('storeVideoClipStop', clip)
+    },
+    clipVideo ({
+      commit
+    }, payload) {
+      const clip = {
+        videoId: payload.videoId,
+        clipTitle: payload.clipTitle,
+        clippedStartTime: payload.clippedStartTime,
+        clippedStopTime: payload.clippedStopTime,
+        clipCalcStartTime: payload.clipCalcStartTime
+      }
+      // console.log(clip)
+      commit('storeVideoClip', clip)
+    },
+    signUserUp ({
+      commit
+    }, payload) {
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload
+        .password)
+        .then(
+          response => {
+            const newUser = {
+              id: response.user.uid,
+              registeredPosts: []
+            }
+            // console.log(newUser)
+            commit('setUser', newUser)
+          }
+        )
+        .catch(
+          error => {
+            console.log(error)
+          }
+        )
+    }
   },
   getters: {
+    clipDuration (state) {
+      return state.clipTimestamp
+    },
+    loadClipDimensions (state) {
+      return state.clipDimensions
+    },
     loadedPosts (state) {
       return state.loadedPosts.sort((postA, postB) => {
         return postA.date > postB.date

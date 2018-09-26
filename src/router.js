@@ -5,6 +5,7 @@ import cm2 from './views/council-meeting-2.vue'
 import ComingSoon from './views/ComingSoon.vue'
 import postView from './views/post-view.vue'
 import Login from './views/login.vue'
+import contentManager from './views/video-manager.vue'
 
 Vue.use(Router)
 
@@ -15,9 +16,9 @@ export default new Router({
     component: ComingSoon
   },
   {
-    path: '/ComingSoon',
-    name: 'ComingSoon',
-    component: ComingSoon
+    path: '/content-manager',
+    name: 'contentManager',
+    component: contentManager
   },
   {
     path: '/Login',

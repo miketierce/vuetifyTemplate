@@ -1,8 +1,8 @@
 <template>
   <v-app class="grey lighten-3">
-    <toolbar/>
+    <toolbar />
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
 
     <!-- <v-footer :fixed="fixed"
@@ -79,9 +79,9 @@ export default {
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   /* Styles */
   .container {
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+    /* padding-bottom: 10px; */
   }
   .episode-title {
     font-size: 14px;
@@ -94,8 +94,8 @@ export default {
 @media only screen and (min-width: 321px) {
   /* Styles */
   .container {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 
@@ -103,8 +103,8 @@ export default {
 @media only screen and (max-width: 320px) {
   /* Styles */
   .container {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 

@@ -22,6 +22,9 @@
             <div class="episode-title text-truncate">
               {{CourseContent.snippet.title}}
             </div>
+            <div>
+              <clipper v-bind:id="id" />
+            </div>
           </v-card>
         </v-flex>
       </v-layout>
@@ -103,6 +106,7 @@
 </template>
 
 <script>
+
 import feed from '@/components/horizontal-scroll-feed.vue'
 import notepad from '@/components/notepad.vue'
 import FooterContent from '@/components/footer.vue'
@@ -110,6 +114,7 @@ import breadcrumbs from '@/components/breadcrumbs.vue'
 import VueSticky from 'vue-sticky' // Es6 module
 import swiper from '@/components/swiper.vue'
 import playerWindow from '@/components/playerWindow.vue'
+import clipper from '@/components/clip.vue'
 
 export default {
   props: ['id'],
@@ -128,7 +133,8 @@ export default {
     VueSticky,
     FooterContent,
     swiper,
-    playerWindow
+    playerWindow,
+    clipper
   },
   watch: {
     $route (to, from) {
@@ -172,9 +178,9 @@ export default {
       set: function () {
         this.CourseContent.contentDetails.videoId = this.$store.getters.loadedPost(this.id).contentDetails.videoId
       }
-
     }
   }
+
 }
 </script>
 

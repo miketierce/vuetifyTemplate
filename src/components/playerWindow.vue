@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div></div>
     <div>Duration: {{ duration }}</div>
     <vue-plyr @timeupdate="videoTimeUpdated"
               :emit="['timeupdate']"
@@ -45,7 +46,7 @@ export default {
   },
   computed: {
     CourseContent () {
-      console.log(this.id)
+      // console.log(this.id)
       return this.$store.getters.loadedPost(this.id)
     },
     videoUrl () {
@@ -59,6 +60,7 @@ export default {
   methods: {
     videoTimeUpdated: function (event) {
       this.duration = this.player.currentTime
+      this.$store.dispatch('videoTimestamp', { timestamp: this.player.currentTime })
     }
   }
 }
