@@ -1,6 +1,6 @@
 <template>
   <v-app class="grey lighten-3">
-    <toolbar />
+    <navBar />
     <v-content>
       <router-view />
     </v-content>
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import toolbar from '@/views/toolbar.vue'
+import navBar from '@/components/navBar.vue'
 export default {
   components: {
-    toolbar
+    navBar
   },
   name: 'App',
   data () {

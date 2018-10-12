@@ -73,11 +73,10 @@
 </template>
 
 <script>
-import toolbar from '@/views/toolbar'
 
 export default {
   components: {
-    toolbar
+
   },
   data () {
     return {

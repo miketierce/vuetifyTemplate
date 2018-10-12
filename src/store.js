@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -11,190 +12,43 @@ export default new Vuex.Store({
       timestamp: ''
     },
     clipDimensions: {
-      videoId: '',
+      clipId: '',
+      clipOwner: '',
+      clipCreated: '',
+      clipViews: '',
+      clipShareCount: '',
+      clipShareUrl: '',
       clipTitle: '',
+      clipDescription: '',
+      clipComments: [{
+        userId: 'that makes since now.'
+      }],
+      stvId: '',
       clippedStartTime: '',
       clippedStopTime: '',
       clipCalcStartTime: ''
     },
-    loadedPosts: [{
-      'kind': 'youtube#playlistItem',
-      'etag': '"XI7nbFXulYBIpL0ayR_gDh3eu1k/9HMdZkkdHtZumZsfvLpnSx1TBBI"',
-      'id': '1',
-      'snippet': {
-        'publishedAt': '2013-10-18T14:55:24.000Z',
-        'channelId': 'UCvceBgMIpKb4zK1ss-Sh90w',
-        'title': 'Andrew Willis, Skatepark Engineer',
-        'description': 'Andrew Willis built a skatepark in East London using reclaimed materials left over from the Olympic Games, creating a lasting legacy for the local community of Hackney Wick.',
-        'thumbnails': {
-          'default': {
-            'url': 'https://i.ytimg.com/vi/GvgqDSnpRQM/default.jpg',
-            'width': 120,
-            'height': 90
-          },
-          'medium': {
-            'url': 'https://i.ytimg.com/vi/GvgqDSnpRQM/mqdefault.jpg',
-            'width': 320,
-            'height': 180
-          },
-          'high': {
-            'url': 'https://i.ytimg.com/vi/GvgqDSnpRQM/hqdefault.jpg',
-            'width': 480,
-            'height': 360
-          },
-          'standard': {
-            'url': 'https://i.ytimg.com/vi/GvgqDSnpRQM/sddefault.jpg',
-            'width': 640,
-            'height': 480
-          }
-        },
-        'channelTitle': 'Google Search Stories',
-        'playlistId': 'PLBCF2DAC6FFB574DE',
-        'position': 0,
-        'resourceId': {
-          'kind': 'youtube#video',
-          'videoId': 'GvgqDSnpRQM'
-        }
-      },
-      'contentDetails': {
-        'videoId': 'GvgqDSnpRQM',
-        'videoPublishedAt': '2013-10-18T07:03:29.000Z'
-      }
-    },
-    {
-      'kind': 'youtube#playlistItem',
-      'etag': '"XI7nbFXulYBIpL0ayR_gDh3eu1k/u3Vr26TTSoSJJjEZTTWL81J2QLo"',
-      'id': '3',
-      'snippet': {
-        'publishedAt': '2011-11-22T15:29:40.000Z',
-        'channelId': 'UCvceBgMIpKb4zK1ss-Sh90w',
-        'title': 'Mark Lesek: A New/Old Prosthetic',
-        'description': 'Follow Mark on Google+: https://plus.google.com/u/0/114778778979884307299/about\r\n\r\nMark lost his arm several years ago. Now his search for a better prosthetic could improve the lives of amputees everywhere.',
-        'thumbnails': {
-          'default': {
-            'url': 'https://i.ytimg.com/vi/V4DDt30Aat4/default.jpg',
-            'width': 120,
-            'height': 90
-          },
-          'medium': {
-            'url': 'https://i.ytimg.com/vi/V4DDt30Aat4/mqdefault.jpg',
-            'width': 320,
-            'height': 180
-          },
-          'high': {
-            'url': 'https://i.ytimg.com/vi/V4DDt30Aat4/hqdefault.jpg',
-            'width': 480,
-            'height': 360
-          },
-          'standard': {
-            'url': 'https://i.ytimg.com/vi/V4DDt30Aat4/sddefault.jpg',
-            'width': 640,
-            'height': 480
-          }
-        },
-        'channelTitle': 'Google Search Stories',
-        'playlistId': 'PLBCF2DAC6FFB574DE',
-        'position': 2,
-        'resourceId': {
-          'kind': 'youtube#video',
-          'videoId': 'V4DDt30Aat4'
-        }
-      },
-      'contentDetails': {
-        'videoId': 'V4DDt30Aat4',
-        'videoPublishedAt': '2011-11-21T19:11:41.000Z'
-      }
-    },
-    {
-      'kind': 'youtube#playlistItem',
-      'etag': '"XI7nbFXulYBIpL0ayR_gDh3eu1k/FOtajYrAwQLEJiBfkH1FpBw-LMU"',
-      'id': '5',
-      'snippet': {
-        'publishedAt': '2011-11-22T15:29:40.000Z',
-        'channelId': 'UCvceBgMIpKb4zK1ss-Sh90w',
-        'title': 'Mark Kempton: Neighbors In Need',
-        'description': "Follow Mark on Google+: https://profiles.google.com/u/0/105705606437451864842\r\n\r\nWhen floodwaters hit northeast Australia, Mark's innovative search became the difference between life and death for many of his neighbors.",
-        'thumbnails': {
-          'default': {
-            'url': 'https://i.ytimg.com/vi/XDgC4FMftpg/default.jpg',
-            'width': 120,
-            'height': 90
-          },
-          'medium': {
-            'url': 'https://i.ytimg.com/vi/XDgC4FMftpg/mqdefault.jpg',
-            'width': 320,
-            'height': 180
-          },
-          'high': {
-            'url': 'https://i.ytimg.com/vi/XDgC4FMftpg/hqdefault.jpg',
-            'width': 480,
-            'height': 360
-          },
-          'standard': {
-            'url': 'https://i.ytimg.com/vi/XDgC4FMftpg/sddefault.jpg',
-            'width': 640,
-            'height': 480
-          }
-        },
-        'channelTitle': 'Google Search Stories',
-        'playlistId': 'PLBCF2DAC6FFB574DE',
-        'position': 4,
-        'resourceId': {
-          'kind': 'youtube#video',
-          'videoId': 'XDgC4FMftpg'
-        }
-      },
-      'contentDetails': {
-        'videoId': 'XDgC4FMftpg',
-        'videoPublishedAt': '2011-11-21T20:36:57.000Z'
-      }
-    },
-    {
-      'kind': 'youtube#playlistItem',
-      'etag': '"XI7nbFXulYBIpL0ayR_gDh3eu1k/TIH5ezna6MPHapXglEmDD2Whknc"',
-      'id': '6',
-      'snippet': {
-        'publishedAt': '2011-09-23T04:52:44.000Z',
-        'channelId': 'UCvceBgMIpKb4zK1ss-Sh90w',
-        'title': 'Zack Matere: Growing Knowledge',
-        'description': 'Add Zack on Google+ https://plus.google.com/108801896271358175231/about\n\nWatch all the Google Search Stories and submit your own at http://www.youtube.com/searchstories\n\n\nZack Matere, a farmer in Soy, Kenya, searched for a way to save his dying crops. What he discovered was a desire to help local farmers and businesses access information.',
-        'thumbnails': {
-          'default': {
-            'url': 'https://i.ytimg.com/vi/OE63BYWdqC4/default.jpg',
-            'width': 120,
-            'height': 90
-          },
-          'medium': {
-            'url': 'https://i.ytimg.com/vi/OE63BYWdqC4/mqdefault.jpg',
-            'width': 320,
-            'height': 180
-          },
-          'high': {
-            'url': 'https://i.ytimg.com/vi/OE63BYWdqC4/hqdefault.jpg',
-            'width': 480,
-            'height': 360
-          }
-        },
-        'channelTitle': 'Google Search Stories',
-        'playlistId': 'PLBCF2DAC6FFB574DE',
-        'position': 5,
-        'resourceId': {
-          'kind': 'youtube#video',
-          'videoId': 'OE63BYWdqC4'
-        }
-      },
-      'contentDetails': {
-        'videoId': 'OE63BYWdqC4',
-        'videoPublishedAt': '2011-09-19T21:03:44.000Z'
-      }
-    }
-    ],
-    user: {
-      id: 'lucas',
-      registeredPosts: ['23']
-    }
+    loadedPosts: [],
+    loadedPost: [],
+    user: null,
+    loading: false,
+    error: null,
+    videoLoaded: false
   },
   mutations: {
+    loadedPost (state, payload) {
+      state.loadedPost = []
+      state.loadedPost.push(payload)
+    },
+    toggleVideoLoaded (state) {
+      state.videoLoaded = !state.videoLoaded
+    },
+    videoLoaded (state, payload) {
+      state.videoLoaded = payload
+    },
+    setLoadedMeetups (state, payload) {
+      state.loadedPosts = payload
+    },
     setUser (state, payload) {
       state.user = payload
     },
@@ -207,9 +61,196 @@ export default new Vuex.Store({
     },
     storeVideoClipStop (state, payload) {
       state.clipDimensions = payload
+    },
+    setLoading (state, payload) {
+      state.loading = payload
+    },
+    setError (state, payload) {
+      state.error = payload
+    },
+    clearError (state) {
+      state.error = null
+    },
+    createVideoPost (state, payload) {
+      state.loadedPosts.push(payload)
     }
   },
   actions: {
+    setPost ({
+      commit,
+      getters
+    }, payload) {
+      commit('setLoading', true)
+      const post = {
+        postType: payload.postType,
+        stvId: payload.stvId,
+        ytTitle: payload.ytTitle,
+        stvTitle: payload.stvTitle,
+        stvAuthor: payload.stvAuthor,
+        ytDescription: payload.ytDescription,
+        stvDescription: payload.stvDescription,
+        ytThumbnailHigh: payload.ytThumbnailHigh,
+        ytChannelId: payload.ytChannelId,
+        ytChannelTitle: payload.ytChannelTitle,
+        ytVideoId: payload.ytVideoId,
+        ytPublishedAt: payload.ytPublishedAt,
+        stvPublishedAt: payload.stvPublishedAt,
+        stvPlayCount: payload.stvPlayCount,
+        uploadUser: getters.user.id,
+        startTime: payload.startTime,
+        endTime: payload.endTime,
+        duration: payload.duration,
+        isClip: payload.isClip,
+        products: payload.products
+      }
+      console.log('post obj: ' + post)
+      commit('loadedPost', post)
+      commit('setLoading', false)
+    },
+    loadMeetups ({
+      commit
+    }) {
+      commit('setLoading', true)
+      firebase.database().ref('posts').once('value')
+        .then((data) => {
+          const meetups = []
+          const obj = data.val()
+          for (let key in obj) {
+            meetups.push({
+              id: key,
+              stvId: obj[key].stvId,
+              ytTitle: obj[key].ytTitle,
+              stvTitle: obj[key].stvTitle,
+              ytDescription: obj[key].ytDescription,
+              stvDescription: obj[key].stvDescription,
+              ytThumbnailHigh: obj[key].ytThumbnailHigh,
+              ytChannelId: obj[key].ytChannelId,
+              ytChannelTitle: obj[key].ytChannelTitle,
+              ytVideoId: obj[key].ytVideoId,
+              ytPublishedAt: obj[key].ytPublishedAt,
+              stvPublishedAt: obj[key].stvPublishedAt,
+              stvPlayCount: obj[key].stvPlayCount,
+              uploadUser: obj[key].uploadUser,
+              startTime: obj[key].startTime,
+              endTime: obj[key].endTime,
+              duration: obj[key].duration,
+              isClip: obj[key].isClip
+            })
+          }
+          commit('setLoadedMeetups', meetups)
+          commit('setLoading', false)
+        })
+        .catch(
+          (error) => {
+            console.log(error)
+            commit('setLoading', false)
+          }
+        )
+    },
+    createVideoPost ({
+      commit,
+      getters
+    }, payload) {
+      commit('setLoading', true)
+      const post = {
+        postType: 'video',
+        stvId: payload.stvId,
+        ytTitle: payload.ytTitle,
+        stvTitle: payload.stvTitle,
+        stvAuthor: payload.stvAuthor,
+        ytDescription: payload.ytDescription,
+        stvDescription: payload.stvDescription,
+        ytThumbnailHigh: payload.ytThumbnailHigh,
+        ytChannelId: payload.ytChannelId,
+        ytChannelTitle: payload.ytChannelTitle,
+        ytVideoId: payload.ytVideoId,
+        ytPublishedAt: payload.ytPublishedAt,
+        stvPublishedAt: payload.stvPublishedAt,
+        stvPlayCount: payload.stvPlayCount,
+        uploadUser: getters.user.id,
+        startTime: payload.startTime,
+        endTime: payload.endTime,
+        duration: payload.duration,
+        isClip: payload.isClip
+      }
+      firebase.database().ref('posts').push(post)
+        .then((data) => {
+          const key = data.key
+          commit('createVideoPost', {
+            ...post,
+            id: key
+          })
+          commit('setLoading', false)
+          this.$router.push('/about')
+        })
+        .catch((error) => {
+          commit('setLoading', false)
+          console.log(error)
+        })
+    },
+    importYouTubeVideo ({
+      commit,
+      ytId
+    }) {
+      commit('setLoading', true)
+      const apiBase =
+        'https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='
+      const apiKey = 'AIzaSyCzWCtUuCjed9oji8LjZYIeB5AONGbaCws'
+      const apiUrl = apiBase + ytId + '&key=' + apiKey
+      axios.get(apiUrl)
+        .then(response => {
+          // console.log(response)
+          const payload = {
+            stvId: response.data.items[0].id,
+            ytTitle: response.data.items[0].snippet.title,
+            stvTitle: response.data.items[0].snippet.title,
+            ytDescription: response.data.items[0].snippet.description,
+            stvDescription: response.data.items[0].snippet.description,
+            // you need to fix  the thumbnail resolution not found issue
+            ytThumbnailStandard: response.data.items[0].snippet.thumbnails
+              .standard.url,
+            ytThumbnailMedium: response.data.items[0].snippet.thumbnails
+              .medium.url,
+            ytThumbnailHigh: response.data.items[0].snippet.thumbnails.high
+              .url,
+            // ytThumbnailMaxRes: response.data.items[0].snippet.thumbnails.maxres.url,
+            ytChannelId: response.data.items[0].snippet.channelId,
+            ytChannelTitle: response.data.items[0].snippet.channelTitle,
+            ytVideoId: response.data.items[0].id,
+            ytPublishedAt: response.data.items[0].snippet.publishedAt,
+            stvPublishedAt: response.data.items[0].snippet.publishedAt,
+            stvPlayCount: response.data.items[0].statistics.viewCount
+          }
+          commit('setLoading', false)
+          commit('videoLoaded', true)
+          commit('createVideoPost', payload)
+          // this.videoLoaded = true
+          // console.log(payload)
+          // _.assign(this.importData, payload)
+          commit('createVideoPost', payload)
+          // do we need to redirect now?
+        })
+        .catch(
+          error => {
+            console.log(error)
+          }
+        )
+    },
+    setLoading ({
+      commit
+    }, payload) {
+      commit('setLoading', payload)
+    },
+    setVideoLoaded ({
+      commit
+    }, payload) {
+      commit('videoLoaded', payload)
+    },
+    clearError ({
+      commit
+    }) {
+      commit('clearError')
+    },
     videoTimestamp ({
       commit
     }, payload) {
@@ -232,7 +273,7 @@ export default new Vuex.Store({
       commit
     }, payload) {
       const clip = {
-        videoId: payload.videoId,
+        stvId: payload.stvId,
         clipTitle: payload.clipTitle,
         clippedStartTime: payload.clippedStartTime,
         clippedStopTime: payload.clippedStopTime,
@@ -244,10 +285,13 @@ export default new Vuex.Store({
     signUserUp ({
       commit
     }, payload) {
+      commit('setLoading', true)
+      commit('clearError')
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload
         .password)
         .then(
           response => {
+            commit('setLoading', false)
             const newUser = {
               id: response.user.uid,
               registeredPosts: []
@@ -258,12 +302,63 @@ export default new Vuex.Store({
         )
         .catch(
           error => {
-            console.log(error)
+            commit('setLoading', false)
+            commit('setError', error)
+            // console.log(error)
           }
         )
+    },
+    signUserIn ({
+      commit
+    }, payload) {
+      commit('setLoading', true)
+      commit('clearError')
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          user => {
+            commit('setLoading', false)
+            const newUser = {
+              id: user.uid,
+              registeredPosts: []
+            }
+            // console.log(newUser)
+            commit('setUser', newUser)
+          }
+        )
+        .catch(
+          error => {
+            commit('setLoading', false)
+            commit('setError', error)
+            // console.log(error)
+          }
+        )
+    },
+    autoSignIn ({
+      commit
+    }, payload) {
+      console.log('user: ' + payload.email)
+      commit('setUser', {
+        id: payload.uid,
+        registeredPosts: []
+      })
+    },
+    logout ({
+      commit
+    }) {
+      firebase.auth().signOut()
+      commit('setUser', null)
     }
   },
   getters: {
+    post (state) {
+      return state.loadedPost
+    },
+    videoLoaded (state) {
+      return state.videoLoaded
+    },
+    user (state) {
+      return state.user
+    },
     clipDuration (state) {
       return state.clipTimestamp
     },
@@ -285,6 +380,12 @@ export default new Vuex.Store({
           return post.id == postId
         })
       }
+    },
+    loading (state) {
+      return state.loading
+    },
+    error (state) {
+      return state.error
     }
   }
 })

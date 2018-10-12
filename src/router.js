@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import home from './views/Home.vue'
 import cm2 from './views/council-meeting-2.vue'
 import ComingSoon from './views/ComingSoon.vue'
-import postView from './views/post-view.vue'
+import post_View from './views/post-view.vue'
 import Login from './views/login.vue'
 import contentManager from './views/video-manager.vue'
+import AuthGuard from './plugins/authGuard'
+import postView from './views/postView'
+import studioView from './views/studioView.vue'
 
 Vue.use(Router)
 
@@ -16,9 +19,27 @@ export default new Router({
     component: ComingSoon
   },
   {
+    path: '/studioView/:id',
+    name: 'studioView',
+    component: studioView,
+    props: true
+  },
+  {
+    path: '/play/:id',
+    name: 'player',
+    component: postView,
+    props: true
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: home
+  },
+  {
     path: '/content-manager',
     name: 'contentManager',
-    component: contentManager
+    component: contentManager,
+    beforeEnter: AuthGuard
   },
   {
     path: '/Login',
@@ -27,9 +48,10 @@ export default new Router({
   },
   {
     path: '/theatre/view/:id',
-    name: 'postView',
+    name: 'post_View',
     props: true,
-    component: postView
+    component: post_View,
+    beforeEnter: AuthGuard
   },
   {
     path: '/council-meeting-2',

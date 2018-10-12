@@ -1,23 +1,20 @@
 <template>
   <v-content>
     <v-container>
-      <breadcrumbs v-bind:id="id"
-                   class="breadcrumb" />
+      <!-- <v-layout row
+                wrap>
+        <breadcrumbs v-bind:id="id"
+                     class="breadcrumb" />
+      </v-layout> -->
       <v-layout row
                 wrap>
         <v-flex xs12
                 xl8
                 offset-xl2>
-          <v-card id="player"
-                  fluid
-                  height="auto"
-                  class="transparent rounded">
-            <!-- <vue-media-embed :source="'youtube://' + CourseContent.contentDetails.videoId"
-                             :auto-play="0"
-                             :allow-fullscreen="1" /> -->
-            <playerWindow v-bind:id="id" />
-          </v-card>
-          <v-card flat
+
+          <playerWindow v-bind:id="id" />
+
+          <!-- <v-card flat
                   class="grey lighten-3 headline">
             <div class="episode-title text-truncate">
               {{CourseContent.snippet.title}}
@@ -25,14 +22,15 @@
             <div>
               <clipper v-bind:id="id" />
             </div>
-          </v-card>
+          </v-card> -->
         </v-flex>
       </v-layout>
     </v-container>
-    <v-container>
+    <v-container style="max-height: 400px"
+                 class="scroll-y">
       <v-flex xs12
-              xl8
-              offset-xl2>
+              xl6
+              offset-xl3>
         <div>
           <v-toolbar color="grey lighten-3"
                      flat>
@@ -63,10 +61,10 @@
                 <div class="mt-2 mr-2 ml-2"
                      v-show="n.id === 'details'">
                   <div>
-                    {{CourseContent.contentDetails.videoId}}
+                    <!-- {{CourseContent.stvId}} -->ID
                   </div>
                   <div>
-                    {{CourseContent.snippet.description}}
+                    <!-- {{CourseContent.stvDescription}} --> Description
                   </div>
                 </div>
                 <div class="mt-2 mr-2 ml-2">
@@ -115,6 +113,7 @@ import VueSticky from 'vue-sticky' // Es6 module
 import swiper from '@/components/swiper.vue'
 import playerWindow from '@/components/playerWindow.vue'
 import clipper from '@/components/clip.vue'
+import playerRaw from '@/components/playerRaw.vue'
 
 export default {
   props: ['id'],
@@ -134,7 +133,8 @@ export default {
     FooterContent,
     swiper,
     playerWindow,
-    clipper
+    clipper,
+    playerRaw
   },
   watch: {
     $route (to, from) {
@@ -147,13 +147,13 @@ export default {
 
       TabContent: [
         {
-          header: 'Details',
-          id: 'details',
+          header: 'Notepad',
+          id: 'notepad',
           component: 'notepad'
         },
         {
-          header: 'Notepad',
-          id: 'notepad',
+          header: 'Details',
+          id: 'details',
           component: 'notepad'
         },
         {
@@ -165,6 +165,16 @@ export default {
           header: 'Downloads',
           id: 'downloads',
           text: 'dlaklkjdf ;lakdf laksdj asdlkjw saldkjfalkjf as; asdjfijlwk ejlasgoiuow asldkjgwoi agkjwoi ag jawoig uaojdg oag owejklajsd f aosigjlwekj '
+        },
+        {
+          header: 'Clips',
+          id: 'clips',
+          text: 'clips inserted here'
+        },
+        {
+          header: 'Reading List',
+          id: 'additionalReading',
+          text: 'Links to verified reading material'
         }
       ]
     }
@@ -176,7 +186,7 @@ export default {
         return this.$store.getters.loadedPost(this.id)
       },
       set: function () {
-        this.CourseContent.contentDetails.videoId = this.$store.getters.loadedPost(this.id).contentDetails.videoId
+        this.CourseContent.stvId = this.$store.getters.loadedPost(this.id).stvId
       }
     }
   }

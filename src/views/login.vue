@@ -1,59 +1,62 @@
 <template>
-
-  <v-container fluid
-               fill-height>
+  <v-container fluid>
     <v-layout row
-              align-center
-              justify-center
-              wrap>
-      <v-flex xs12>
-        <v-card flat
-                class="grey lighten-3">
-          <v-card-text>
-            <v-container>
-
-              <v-form>
-                <v-text-field prepend-icon="person"
-                              name="login"
-                              label="Login"
-                              type="text"></v-text-field>
-                <v-text-field id="password"
-                              prepend-icon="lock"
-                              name="password"
-                              label="Password"
-                              type="password"></v-text-field>
-                <v-layout row
-                          wrap>
-                  <v-flex xs12>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="primary">Login</v-btn>
-                    </v-card-actions>
-                  </v-flex>
-                </v-layout>
-              </v-form>
-            </v-container>
-          </v-card-text>
-        </v-card>
+              align-center>
+      <v-flex xs12
+              sm6
+              offset-sm3>
+        <v-tabs slot="extension"
+                v-model="tabs"
+                centered
+                fixed-tabs
+                color="transparent"
+                slider-color="primary">
+          <v-tab v-for="n in TabContent"
+                 :key="n.id">
+            {{n.header}}
+          </v-tab>
+        </v-tabs>
+        <v-tabs-items v-model="tabs">
+          <v-tab-item v-for="n in TabContent"
+                      :key="n.id">
+            <signIn class="mt-2 mr-2 ml-2"
+                    v-show="n.id === 'LoginForm'" />
+            <register class="mt-2 mr-2 ml-2"
+                      v-show="n.id === 'Register'" />
+          </v-tab-item>
+        </v-tabs-items>
       </v-flex>
     </v-layout>
-
-    <register />
-
   </v-container>
-
 </template>
 
 <script>
-// https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=PL_LtcH31mPi87PZgkyjgaYsmNcKSitCYE&key=AIzaSyDHCo-BGYvaOVj4XA8OzJCU0DFYme-3uTE
 import register from '@/components/signUp.vue'
+import signIn from '@/components/signIn.vue'
+import gridTest from '@/components/gridTest.vue'
+
 export default {
   data: () => ({
+    tabs: null,
+    TabContent: [
+      {
+        header: 'Login',
+        id: 'LoginForm',
+        component: 'Login'
+      },
+      {
+        header: 'Register',
+        id: 'Register',
+        component: 'Register'
+      }
+    ],
     activeUser: false,
     drawer: null
   }),
   components: {
-    register
+    register,
+    signIn,
+    gridTest
   },
   props: {
     source: String

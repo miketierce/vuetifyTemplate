@@ -1,43 +1,62 @@
 <template>
-  <v-container class="carousel" fluid >
+  <v-container class="carousel"
+               fluid>
     <v-slide-y-transition mode="out-in">
-      <v-layout row wrap align-center>
+      <v-layout row
+                wrap
+                align-center>
         <v-flex xs12>
-          <v-carousel dark hide-controls align-end justify-start row fill-height delimiter-icon="stop" >
-            <toolbar class="carousel"/>
-            <v-carousel-item
-              v-for="(item,i) in header_images"
-              :gradient="gradient"
-              :key="i"
-              :src="item.src"
-            >
-            <v-container fill-height>
-              <v-layout align-center justify-start>
-                <v-flex text-xs-left>
-                  <h3 class="headline white--text font-weight-black pl-1">{{item.title}}</h3>
-                  <h3 class="headline white--text font-weight-light pl-1">{{item.description}}</h3>
-                  <br>
-                  <v-btn outline color="white">Watch Now</v-btn>
-                </v-flex>
-              </v-layout>
-            </v-container>
+          <v-carousel dark
+                      hide-controls
+                      align-end
+                      justify-start
+                      row
+                      fill-height
+                      delimiter-icon="stop">
+            <toolbar class="carousel" />
+            <v-carousel-item v-for="(item,i) in header_images"
+                             :gradient="gradient"
+                             :key="i"
+                             :src="item.src">
+              <v-container fill-height>
+                <v-layout align-center
+                          justify-start>
+                  <v-flex text-xs-left>
+                    <h3 class="headline white--text font-weight-black pl-1">{{item.title}}</h3>
+                    <h3 class="headline white--text font-weight-light pl-1">{{item.description}}</h3>
+                    <br>
+                    <v-btn outline
+                           color="white">Watch Now</v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-container>
             </v-carousel-item>
           </v-carousel>
         </v-flex>
-    <!-- Watch List Row *Needs Horizontal Scroll -->
-        <v-flex xs12 >
-          <v-container fluid grid-list-lg class="grey lighten-3">
-            <v-layout row full-width wrap>
+        <!-- Watch List Row *Needs Horizontal Scroll -->
+        <v-flex xs12>
+          <v-container fluid
+                       grid-list-lg
+                       class="grey lighten-3">
+            <v-layout row
+                      full-width
+                      wrap>
               <v-flex xs12>
                 <div class="mt-2 mb-2">
                   <h3 class="display-1 font-weight-light mt-2 mb-2">Watch List</h3>
                 </div>
-                <v-container fluid grid-list-md >
-                  <v-layout row wrap>
-                    <v-flex v-for="card in watchlist" xs12 md3 :key="card.title" >
+                <v-container fluid
+                             grid-list-md>
+                  <v-layout row
+                            wrap>
+                    <v-flex v-for="card in watchlist"
+                            xs12
+                            md3
+                            :key="card.title">
                       <v-card hover>
-                        <v-card-media :src="card.src" height="200px" >
-                        <!-- <v-container fill-height fluid pa-2 >
+                        <v-card-media :src="card.src"
+                                      height="200px">
+                          <!-- <v-container fill-height fluid pa-2 >
                           <v-layout fill-height >
                             <v-flex xs12 align-end flexbox>
                                 <v-icon color="yellow lighten-1">star</v-icon>
@@ -80,36 +99,35 @@
           </v-container>
         </v-flex>
 
-<!-- Trending Videos Row *Needs Horizontal Scroll -->
-        <v-flex xs12 >
-          <v-container fluid grid-list-lg class="grey lighten-3">
-            <v-layout row full-width wrap>
+        <!-- Trending Videos Row *Needs Horizontal Scroll -->
+        <v-flex xs12>
+          <v-container fluid
+                       grid-list-lg
+                       class="grey lighten-3">
+            <v-layout row
+                      full-width
+                      wrap>
               <v-flex xs12>
                 <div class="mt-2 mb-2">
-                  <h3 class="display-1 font-weight-light mt-2 mb-2">Trending Videos</h3>
+                  <h3 class="display-1 font-weight-light mt-2 mb-2">Trending
+                    Videos</h3>
                 </div>
-                <v-container fluid grid-list-md >
-                  <v-layout row wrap>
-                    <v-flex v-for="card in trending" xs12 md3 :key="card.title" >
+                <v-container fluid
+                             grid-list-md>
+                  <v-layout row
+                            wrap>
+                    <v-flex v-for="card in trending"
+                            xs12
+                            md3
+                            :key="card.title">
                       <v-card hover>
-                        <v-card-media :src="card.src" height="200px" >
-                        <!-- <v-container fill-height fluid pa-2 >
-                          <v-layout fill-height >
-                            <v-flex xs12 align-end flexbox>
-                                <v-icon color="yellow lighten-1">star</v-icon>
-                                <v-icon color="yellow lighten-1">star</v-icon>
-                                <v-icon color="yellow lighten-1">star</v-icon>
-                                <v-icon color="yellow lighten-1">star</v-icon>
-                                <v-icon color="yellow lighten-1">star_half</v-icon>
-                            </v-flex>
-                          </v-layout>
-                        </v-container> -->
+                        <v-card-media :src="card.src"
+                                      height="200px">
                         </v-card-media>
                         <v-card-title primary-title>
                           <div>
                             <h3 class="headline mb-0">{{card.title}}</h3>
                             <div :class="card.class">{{card.description}}</div>
-                            <!-- <div :class="card.class">{{card.length}}</div> -->
                           </div>
                         </v-card-title>
                         <v-card-actions>
@@ -143,11 +161,10 @@
 </template>
 
 <script>
-import toolbar from '@/views/toolbar'
 
 export default {
   components: {
-    toolbar
+
   },
   data () {
     return {
@@ -223,14 +240,14 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style >
 .carousel {
-  padding: 0!important
+  padding: 0 !important;
 }
 .section {
   background-color: grey lighten-2;
-
 }
 
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {

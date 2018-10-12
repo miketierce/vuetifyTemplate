@@ -1,78 +1,113 @@
 <template>
-  <div id="app">
-    <div></div>
-    <div>Duration: {{ duration }}</div>
-    <vue-plyr @timeupdate="videoTimeUpdated"
-              :emit="['timeupdate']"
-              ref="player">
-      <!-- <video>
-        <source :src="videoUrl"
-                type="video/mp4" />
-      </video> -->
-      <div class="plyr__video-embed">
-        <iframe :src="videoUrl"
-                allowfullscreen
-                allowtransparency
-                allow="autoplay">
-        </iframe>
+  <v-content>
+    <!-- <v-container fluid>
+      <v-layout row
+                wrap
+                justify-center
+                align-center> -->
+    <v-flex xs12>
+      <div id="player"
+           class="elevation-10 rounded">
+        <vue-plyr @timeupdate="videoTimeUpdated"
+                  @playing="nowPlaying"
+                  @ready="playerReady"
+                  :emit="['ready','timeupdate','playing']"
+                  ref="player"
+                  :options="playerOptions">
+          <v-card class="plyr__poster rounded"
+                  height="auto">
+            <iframe class="rounded"
+                    :src="videoUrl"
+                    allowfullscreen
+                    allowtransparency>
+            </iframe>
+          </v-card>
+        </vue-plyr>
       </div>
-    </vue-plyr>
-  </div>
+    </v-flex>
+    <!-- </v-layout>
+    </v-container> -->
+  </v-content>
 </template>
 
 <script>
+
 export default {
   name: 'App',
-  props: ['id'],
+  props: ['videoUrl'],
   data () {
     return {
-      duration: null,
-      player: null
+
     }
   },
-  watch: {
-    videoUrl () {
-      console.log('source switch ' + this.videoUrl)
-      this.player.source = {
-        type: 'video',
-        sources: [
-          {
-            src: this.videoUrl,
-            provider: 'youtube'
-          }
-        ]
-      }
-    }
+  components: {
+
   },
-  computed: {
-    CourseContent () {
-      // console.log(this.id)
-      return this.$store.getters.loadedPost(this.id)
-    },
-    videoUrl () {
-      return 'https://www.youtube.com/embed/' + this.CourseContent.contentDetails.videoId + '?iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
-    }
-  },
-  components: {},
   mounted () {
     this.player = this.$refs.player.player
+    // this.player.on('ready')
+    // this.seekBack(30, 'backward')
   },
+  computed: {
+    playerOptions () {
+      const options = {
+        title: 'This is an example video',
+        playsinline: true,
+        volume: 1,
+        clicktoplay: true,
+        controls: ['play', 'fullscreen'],
+        debug: false
+      }
+      return options
+    },
+    loadedPost () {
+      return this.$store.getters.loadedPost(this.$route.params.id)
+    }
+  },
+
   methods: {
+    nowPlaying: function (event) {
+      console.log(event)
+    },
+    seekBack (sec, direction) {
+      if (direction === 'forward') {
+
+      } else {
+        if (direction === 'backward') {
+          console.log('you fucking rock')
+          return (t) => {
+            return this.player.currentTime - sec
+          }
+        }
+      }
+    },
+    playerReady () {
+      if (this.loadedPost.isClip) {
+        this.player.currentTime = this.loadedPost.startTime
+      }
+      console.log('player ready')
+      this.$store.dispatch('setVideoLoaded', true)
+    },
+    toggleControls () {
+      this.toggleControlIndicator = true
+      this.toggleLabel = 'Hide Controls'
+    },
     videoTimeUpdated: function (event) {
       this.duration = this.player.currentTime
       this.$store.dispatch('videoTimestamp', { timestamp: this.player.currentTime })
+
+      if (this.loadedPost.isClip) {
+        if (this.player.currentTime > this.loadedPost.endTime) {
+          this.player.stop()
+        }
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.plyr--video {
+  border-radius: 5px;
 }
 </style>

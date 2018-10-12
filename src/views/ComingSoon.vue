@@ -12,9 +12,9 @@
                :src="item.src"
                alt="">
         </div>
-        <div class="title mb-5 ">
-          Coming Soon...
-        </div>
+          <div class="title mb-5 ">
+            Coming Soon...
+          </div>
       </v-flex>
 
     </v-layout>
@@ -23,11 +23,10 @@
 </template>
 
 <script>
-import toolbar from '@/views/toolbar'
 
 export default {
   components: {
-    toolbar
+
   },
   data () {
     return {

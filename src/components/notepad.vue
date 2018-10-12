@@ -1,22 +1,19 @@
 <template>
-  <v-content>
+  <v-container fluid
+               class="scroll-y"
+               max-height="400px">
     <v-layout row
               wrap>
       <v-flex xs12>
-        <h3>Notepad </h3>
-        <v-card fluid
-                flat
-                height="auto"
-                color="grey lighten-3">
-          <v-textarea name="input-7-1"
-                      v-model="notebook"
-                      auto-grow
-                      flat
-                      hint="Galactic Sticky Note"></v-textarea>
-        </v-card>
+        <v-textarea name="input-7-1"
+                    v-model="notebook"
+                    auto-grow
+                    flat
+                    hint="Galactic Sticky Note">
+        </v-textarea>
       </v-flex>
     </v-layout>
-  </v-content>
+  </v-container>
 </template>
 
 <script>
