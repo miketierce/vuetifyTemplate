@@ -7,7 +7,8 @@
       <v-flex xs12>
         <playerWindow v-if="videoLoaded"
                       v-bind:videoUrl="videoUrl" />
-        <clipper v-bind:id="id" />
+        <clipper v-if="loadedPost.postType != 'Clip'"
+                 v-bind:id="id" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -28,7 +29,7 @@ export default {
   },
   watch: {
     $route (to, from) {
-      return this.$store.getters.loadedPost(this.$route.params.id)
+      return this.$store.getters.post
     }
   },
   computed: {
@@ -41,10 +42,11 @@ export default {
     },
     loadedPost () {
       // console.log('postId: ' + this.id)
-      return this.$store.getters.loadedPost(this.$route.params.id)
+      return this.$store.getters.post
     },
     videoUrl () {
-      return 'https://www.youtube.com/embed/' + this.loadedPost.ytVideoId + '??iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
+      // return 'https://www.youtube.com/embed/' + this.loadedPost.ytVideoDetails.videoId + '??iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
+      return this.loadedPost.playerUrl
     },
     id () {
       return this.$route.params.id

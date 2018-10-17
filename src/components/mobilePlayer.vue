@@ -65,7 +65,7 @@ export default {
     },
     loadedPost () {
       // console.log('postId: ' + this.id)
-      return this.$store.getters.loadedPost(this.id)
+      return this.$store.getters.post
     }
     // ,
     // videoLoaded () {

@@ -80,7 +80,7 @@ export default {
     },
     loadedPost () {
       // console.log('postId: ' + this.id)
-      return this.$store.getters.loadedPost(this.$route.params.id)
+      return this.$store.getters.post
     }
   },
   data () {

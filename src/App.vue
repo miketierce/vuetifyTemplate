@@ -2,7 +2,7 @@
   <v-app class="grey lighten-3">
     <navBar />
     <v-content>
-      <router-view />
+      <router-view :key="$route.fullPath" />
     </v-content>
 
     <!-- <v-footer :fixed="fixed"
@@ -15,6 +15,13 @@
 <script>
 import navBar from '@/components/navBar.vue'
 export default {
+  watch: {
+    $route (to, from) {
+      this.$store.dispatch('setPostId', this.$route.params.id)
+      this.$store.dispatch('setPost')
+      // return this.$store.post
+    }
+  },
   components: {
     navBar
   },

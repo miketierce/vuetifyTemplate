@@ -9,14 +9,28 @@ import contentManager from './views/video-manager.vue'
 import AuthGuard from './plugins/authGuard'
 import postView from './views/postView'
 import studioView from './views/studioView.vue'
+import store from './store'
+import galleryView from './views/galleryView.vue'
 
 Vue.use(Router)
 
 export default new Router({
+  scrollBehavior (to, from, savedPosition) {
+    return {
+      x: 0,
+      y: 0
+    }
+  },
   routes: [{
     path: '/',
     name: 'ComingSoon',
     component: ComingSoon
+  },
+  {
+    path: '/galleryView/:uid',
+    name: 'galleryView',
+    component: galleryView,
+    props: true
   },
   {
     path: '/studioView/:id',

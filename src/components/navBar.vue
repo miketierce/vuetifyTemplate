@@ -67,7 +67,7 @@ export default {
       ]
       if (this.userIsAuthenticated) {
         menuItems = [
-          { icon: 'account_balance', title: 'Home', link: '/home' },
+          { icon: 'account_balance', title: 'Home', link: '/galleryView/' + this.$store.state.user.id },
           { icon: 'dashboard', title: 'Temp Feed', link: '/about' },
           { icon: 'add_to_queue', title: 'Import Content', link: '/content-manager' }
         ]

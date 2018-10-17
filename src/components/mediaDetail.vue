@@ -26,8 +26,8 @@
                           align-start
                           justify-center>
                   <v-text-field class="mt-1"
-                                v-model="loadedPost.stvAuthor"
-                                :placeholder="loadedPost.ytChannelTitle"
+                                v-model="loadedPost.stvData.author"
+                                :placeholder="loadedPost.stvData.author"
                                 prepend-icon="how_to_reg"
                                 solo-inverted
                                 full-width
@@ -68,8 +68,8 @@
                           align-start
                           justify-center>
                   <v-text-field class="mt-1"
-                                v-model="loadedPost.ytChannelTitle"
-                                :placeholder="loadedPost.ytChannelTitle"
+                                v-model="loadedPost.ytVideoDetails.channelTitle"
+                                :placeholder="loadedPost.ytVideoDetails.channelTitle"
                                 disabled
                                 prepend-icon="business"
                                 single-line
@@ -108,8 +108,8 @@
                           align-start
                           justify-center>
                   <v-text-field class="mt-1"
-                                v-model="loadedPost.stvTitle"
-                                :value="loadedPost.stvTitle"
+                                v-model="loadedPost.stvData.title"
+                                :value="loadedPost.stvData.title"
                                 prepend-icon="title"
                                 single-line
                                 full-width
@@ -147,8 +147,8 @@
                           align-start
                           justify-center>
                   <v-textarea class="mt-1"
-                              v-model="loadedPost.stvDescription"
-                              :value="loadedPost.stvDescription"
+                              v-model="loadedPost.stvData.description"
+                              :value="loadedPost.stvData.description"
                               prepend-icon="import_contacts"
                               full-width
                               auto-grow
@@ -224,7 +224,7 @@ export default {
     },
     loadedPost () {
       // console.log('postId: ' + this.id)
-      return this.$store.getters.loadedPost(this.$route.params.id)
+      return this.$store.getters.post
     }
   }
 }

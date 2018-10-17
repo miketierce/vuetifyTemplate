@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content v-if="videoLoaded">
     <v-container fluid>
       <v-layout row>
         <v-flex xs12>
@@ -22,12 +22,12 @@
       </v-layout>
       <v-layout row>
         <v-flex xs12>
-          <!-- <div>{{clipDimensions}}</div> -->
-          <div>Duration: {{clipTime}}</div>
-          <div>Clip Start: {{clippedStartTime}}</div>
-          <div>Clip Calc Start: {{clipCalcStartTime}}</div>
-          <div>Clip End: {{clippedStopTime}}</div>
-          <!-- <div>Clip Time: {{clipDuration}}</div> -->
+          <div>Recording: {{recordingLength | timeInHours }}</div>
+          <!-- <div>Duration: {{clipTime}}</div> -->
+          <!-- <div>Clip Start: {{clippedStartTime}}</div> -->
+          <!-- <div>Clip Calc Start: {{clipCalcStartTime}}</div> -->
+          <!-- <div>Clip End: {{clippedStopTime}}</div> -->
+          <!-- {{clipperObject}} -->
         </v-flex>
       </v-layout>
     </v-container>
@@ -36,11 +36,10 @@
 
 <script>
 export default {
-  // watch: {
-  //   $route (to, from) {
-  //     return this.$store.getters.loadedPost(this.$route.params.id)
-  //   }
-  // },
+  beforeMount () {
+    console.log('route id: ' + this.$route.params)
+    this.$store.dispatch('setPostId', this.$route.params.id)
+  },
   props: ['duration'],
   methods: {
     calcStartTime (s) {
@@ -60,42 +59,77 @@ export default {
       this.recording = false
       this.recordTime = 0
       this.clippedStopTime = (this.clipTime + 2)
-      const payload = {
-        postType: 'clip',
-        stvId: this.loadedPost.stvId,
-        ytTitle: this.loadedPost.ytTitle,
-        stvTitle: this.loadedPost.stvTitle,
-        stvAuthor: this.loadedPost.ytChannelTitle,
-        ytDescription: this.loadedPost.ytDescription,
-        stvDescription: this.loadedPost.stvDescription,
-        ytThumbnailHigh: this.loadedPost.ytThumbnailHigh,
-        ytChannelId: this.loadedPost.ytChannelId,
-        ytChannelTitle: this.loadedPost.ytChannelTitle,
-        ytVideoId: this.loadedPost.ytVideoId,
-        ytPublishedAt: this.loadedPost.ytPublishedAt,
-        stvPublishedAt: this.loadedPost.stvPublishedAt,
-        stvPlayCount: this.loadedPost.stvPlayCount,
-        uploadUser: this.loadedPost.uploadUser,
-        startTime: this.clipCalcStartTime,
-        endTime: this.clippedStopTime,
-        duration: this.recordDuration,
-        isClip: true }
-      this.$store.dispatch('createVideoPost', payload)
-      console.log('clip details: start- ' + payload.startTime + 'end- ' + payload.stopTime)
+      // const payload = {
+      //   ...this.clipperObject
+      // }
+      // this should call insertVideoClip
+      this.$store.dispatch('createVideoPost', this.clipperObject)
+      console.log('clip stored')
+      // console.log('clip details: start- ' + payload.startTime + 'end- ' + payload.stopTime)
     }
   },
   watch: {
     $route (to, from) {
       this.id = this.$route.params.id
-      return this.$store.getters.loadedPost(this.$route.params.id)
+      return this.$store.getters.post
     }
   },
   computed: {
+    clipperObject () {
+      const obj = {
+        // ...this.loadedPost
+        postType: 'Clip',
+        playerUrl: 'https://www.youtube.com/embed/' +
+                this.loadedPost.ytVideoDetails.videoId +
+                '?iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1',
+        ytVideoDetails: {
+          embeddable: this.loadedPost.ytVideoDetails.embeddable,
+          videoId: this.loadedPost.ytVideoDetails.videoId,
+          coverImgUrl: this.loadedPost.ytVideoDetails.coverImgUrl,
+          title: this.loadedPost.ytVideoDetails.title,
+          description: this.loadedPost.ytVideoDetails.description,
+          duration: this.loadedPost.ytVideoDetails.duration,
+          publishDate: this.loadedPost.ytVideoDetails.publishDate,
+          channelTitle: this.loadedPost.ytVideoDetails.channelTitle,
+          channelId: this.loadedPost.ytVideoDetails.channelId,
+          viewCount: this.loadedPost.ytVideoDetails.viewCount,
+          likeCount: this.loadedPost.ytVideoDetails.likeCount,
+          dislikeCount: this.loadedPost.ytVideoDetails.dislikeCount,
+          favoriteCount: this.loadedPost.ytVideoDetails.favoriteCount,
+          commentCount: this.loadedPost.ytVideoDetails.commentCount
+        },
+        ytVideoAnalytics: {
+          // topicIds: inject.ytVideoAnalytics.topicIds,
+          // relevantTopicIds: inject.ytVideoAnalytics.relevantTopicIds,
+          topicCategories: this.loadedPost.ytVideoAnalytics.topicCategories,
+          tags: this.loadedPost.ytVideoAnalytics.tags
+        },
+        stvData: {
+          author: this.loadedPost.stvData.author,
+          title: this.loadedPost.stvData.title,
+          description: this.loadedPost.stvData.description,
+          impressions: this.loadedPost.stvData.impressions,
+          plays: this.loadedPost.stvData.plays,
+          shares: this.loadedPost.stvData.shares
+        },
+        userDetails: this.loadedPost.userDetails,
+        resources: this.loadedPost.resources,
+        time: {
+          start: this.clipCalcStartTime,
+          end: this.clippedStopTime,
+          duration: this.recordDuration
+        }
+      }
+      return obj
+    },
     id () {
       return this.$route.params.id
     },
+    videoLoaded () {
+      return this.$store.getters.videoLoaded
+    },
     loadedPost () {
-      return this.$store.getters.loadedPost(this.id)
+      return this.$store.getters.post
     },
 
     clipDimensions () {
@@ -106,6 +140,11 @@ export default {
     },
     recordDuration () {
       return (this.clippedStopTime - this.clipCalcStartTime)
+    },
+    recordingLength () {
+      let val = 0
+      val = (this.clipTime - this.clipCalcStartTime)
+      return val
     }
     // stvAuthor () {
     //   if (this.editAuthor !== null) {

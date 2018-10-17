@@ -1,6 +1,7 @@
 <template>
   <v-content>
-    <v-container grid-list-xs>
+    <v-container fluid
+                 grid-list-xl>
       <!-- row 1 this is the top of page loading indicator -->
       <v-layout row
                 wrap
@@ -17,27 +18,9 @@
             </v-card-text>
           </v-card>
         </v-flex>
-        <v-flex xs4
-                offset-xs8
-                v-show="videoLoaded">
-          <v-card id="loading-block"
-                  flat
-                  height="85px"
-                  class="grey lighten-3 ">
-            <v-card-text>
-              <v-text-field append-icon="mic"
-                            color="elevation-10"
-                            hover
-                            solo-inverted
-                            full-width
-                            hide-details
-                            label="Search Lecture Contents"
-                            prepend-inner-icon="search">
-              </v-text-field>
-            </v-card-text>
-          </v-card>
-        </v-flex>
       </v-layout>
+      <!-- {{loadedPost}} -->
+
       <!-- row 2 player & toolbelt -->
       <v-layout row
                 wrap
@@ -46,6 +29,7 @@
         <v-flex xs12
                 sm6>
           <v-card id="player-window"
+                  flat
                   height="auto"
                   color="grey lighten-3">
             <v-container fluid
@@ -61,9 +45,34 @@
             </v-container>
           </v-card>
         </v-flex>
+
         <v-flex xs12
                 sm6>
-          <v-card id="toolBelt"
+          <theTerminal />
+          <!-- <v-card id="notepad"
+                  height="auto"
+                  color="grey lighten-2"
+                  class="mb-0">
+            <v-container fluid
+                         grid-list-xs>
+              <v-layout row
+                        wrap
+                        justify-center
+                        align-center
+                        fill-height>
+              </v-layout>
+            </v-container>
+          </v-card> -->
+        </v-flex>
+      </v-layout>
+      <v-layout row
+                wrap
+                fill-height
+                align-start>
+        <v-flex xs12
+                sm6>
+          <v-card flat
+                  id="toolBelt"
                   height="auto"
                   color="grey lighten-3 ma-2"
                   class="ma-0">
@@ -71,22 +80,24 @@
           </v-card>
         </v-flex>
       </v-layout>
+
+      <feed />
       <!-- row 3 resources -->
-      <v-layout row
+      <!-- <v-layout row
                 wrap>
         <v-flex xs12>
           <v-card id="resources"
                   height="auto"
-                  class="grey lighten-3 scroll-y">
-            <!-- this container needs a bad ass fad intro... -->
-            <v-container fluid>
+                  class="grey lighten-3 scroll-y"> -->
+      <!-- this container needs a bad ass fad intro... -->
+      <!-- <v-container fluid>
               <v-layout align-center
                         justify-start
                         row
                         fill-height>
-                <v-container grid-list-xs>
-                  <!-- product form -->
-                  <v-flex xs12
+                <v-container grid-list-xs> -->
+      <!-- product form -->
+      <!-- <v-flex xs12
                           class="">
                     <v-divider class="mt-0 ml-5 mr-5 mb-5"></v-divider>
                     <div class="ma-3 headline font-weight-bold">Resources</div>
@@ -144,10 +155,10 @@
                         </v-card>
                       </v-flex>
                     </v-layout>
-                  </v-flex>
+                  </v-flex> -->
 
-                  <!-- viw clips form video -->
-                  <v-flex xs12
+      <!-- viw clips form video -->
+      <!-- <v-flex xs12
                           class="">
                     <v-divider class="ma-5"></v-divider>
                     <div class="ma-3 headline font-weight-bold">Clips</div>
@@ -205,16 +216,16 @@
                         </v-card>
                       </v-flex>
                     </v-layout>
-                  </v-flex>
+                  </v-flex> -->
 
-                </v-container>
-              </v-layout>
+      <!-- </v-container> -->
+      <!-- </v-layout> -->
 
-            </v-container>
+      <!-- </v-container> -->
 
-          </v-card>
-        </v-flex>
-      </v-layout>
+      <!-- </v-card> -->
+      <!-- </v-flex> -->
+      <!-- </v-layout> -->
     </v-container>
 
   </v-content>
@@ -223,12 +234,19 @@
 <script>
 import toolBelt from '@/components/toolBelt'
 import player from '@/components/player'
+import feed from '@/components/feed'
+import theTerminal from '@/components/theTerminal'
 
 export default {
-
+  beforeMount () {
+    console.log('route id: ' + this.$route.params)
+    this.$store.dispatch('setPostId', this.$route.params.id)
+  },
   components: {
     toolBelt,
-    player
+    player,
+    feed,
+    theTerminal
   },
   // watch: {
   //   $route (to, from) {
@@ -243,11 +261,11 @@ export default {
       quickAdd: false
     }
   },
-  mounted () {
-    this.$store.dispatch('setVideoLoaded', true)
-    // this.id = this.$route.params.id
-    // this.$store.dispatch('setPost', this.$route.params.id)
-  },
+  // mounted () {
+  //   // this.$store.dispatch('setVideoLoaded', true)
+  //   // this.id = this.$route.params.id
+  //   // this.$store.dispatch('setPost', this.$route.params.id)
+  // },
   computed: {
     loading () {
       return this.$store.getters.loading
@@ -255,7 +273,7 @@ export default {
     },
     loadedPost () {
       // console.log('postId: ' + this.id)
-      return this.$store.getters.loadedPost(this.id)
+      return this.$store.getters.post
     },
     videoLoaded () {
       return this.$store.getters.videoLoaded

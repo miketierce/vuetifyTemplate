@@ -84,7 +84,7 @@ export default {
   computed: {
     loadedPost () {
       // console.log('postId: ' + this.id)
-      return this.$store.getters.loadedPost(this.$route.params.id)
+      return this.$store.getters.post
     }
     // videoId () {
     //   console.log('ytid - ' + this.loadedPost.ytid)

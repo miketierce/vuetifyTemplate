@@ -1,5 +1,6 @@
 <template>
   <v-container grid-list-lg>
+    {{loadedPosts}}
     <v-layout row
               wrap>
       <v-flex xs12
@@ -80,14 +81,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   computed: {
-    loadedPosts () {
-      return this.$store.getters.loadedPosts
-    },
-    loading () {
-      return this.$store.getters.loading
-    }
+    ...mapGetters([
+      'relatedVideos',
+      'loading',
+      'queryVideoResult',
+      'videoLoaded',
+      'loadedPosts'
+    ]
+    )
   },
   methods: {
     goTo (post) {

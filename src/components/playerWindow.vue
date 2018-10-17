@@ -55,13 +55,13 @@ export default {
         playsinline: true,
         volume: 1,
         clicktoplay: true,
-        controls: ['play', 'fullscreen'],
+        controls: ['play', 'progress', 'fullscreen'],
         debug: false
       }
       return options
     },
     loadedPost () {
-      return this.$store.getters.loadedPost(this.$route.params.id)
+      return this.$store.getters.post
     }
   },
 
@@ -74,7 +74,7 @@ export default {
 
       } else {
         if (direction === 'backward') {
-          console.log('you fucking rock')
+          // console.log('you fucking rock')
           return (t) => {
             return this.player.currentTime - sec
           }
@@ -82,8 +82,8 @@ export default {
       }
     },
     playerReady () {
-      if (this.loadedPost.isClip) {
-        this.player.currentTime = this.loadedPost.startTime
+      if (this.loadedPost.postType === 'Clip') {
+        this.player.currentTime = this.loadedPost.time.start
       }
       console.log('player ready')
       this.$store.dispatch('setVideoLoaded', true)
@@ -96,8 +96,8 @@ export default {
       this.duration = this.player.currentTime
       this.$store.dispatch('videoTimestamp', { timestamp: this.player.currentTime })
 
-      if (this.loadedPost.isClip) {
-        if (this.player.currentTime > this.loadedPost.endTime) {
+      if (this.loadedPost.postType === 'Clip') {
+        if (this.player.currentTime > this.loadedPost.time.end) {
           this.player.stop()
         }
       }

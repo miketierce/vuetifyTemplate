@@ -35,6 +35,7 @@ Vue.use(VueVideoPlayer, {
 // })
 
 Vue.use(axios)
+
 Vue.use(VueMq, {
   breakpoints: {
     mobile: 450,
@@ -66,6 +67,18 @@ var filter = function (text, length, clamp) {
   return content.length > length ? content.slice(0, length) + clamp : content
 }
 
+Vue.filter('timeInHours', function (value) {
+  let hours = parseInt(Math.floor(value / 3600))
+  let minutes = parseInt(Math.floor((value - (hours * 3600)) / 60))
+  let seconds = parseInt((value - ((hours * 3600) + (minutes * 60))) % 60)
+
+  let dHours = (hours > 9 ? hours : '0' + hours)
+  let dMins = (minutes > 9 ? minutes : '0' + minutes)
+  let dSecs = (seconds > 9 ? seconds : '0' + seconds)
+
+  return dHours + ':' + dMins + ':' + dSecs
+})
+
 Vue.filter('truncate', filter)
 
 Vue.filter('formatNumber', function (value) {
@@ -95,6 +108,6 @@ new Vue({
         this.$store.dispatch('autoSignIn', user)
       }
     })
-    this.$store.dispatch('loadMeetups')
+    this.$store.dispatch('loadVideoPosts')
   }
 }).$mount('#app')

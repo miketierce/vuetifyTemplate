@@ -356,7 +356,7 @@ export default {
     },
     loadedPost () {
       // console.log('postId: ' + this.id)
-      return this.$store.getters.loadedPost(this.id)
+      return this.$store.getters.post
     },
     loading () {
       return this.$store.getters.loading

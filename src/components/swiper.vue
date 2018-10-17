@@ -12,7 +12,7 @@
                   pb-1>
 
             <div class="pos-relative">
-              <swiper-slide v-for="(media, index) in swiperSlides"
+              <swiper-slide v-for="(media, index) in load"
                             :key="index">
                 <v-card width="200px"
                         height="auto"
@@ -26,7 +26,8 @@
                          :src="media.src"
                          class="pos-relative rounded ">
                     <v-spacer></v-spacer>
-                    <div class="thumbText text-xs-left pl-1 subheading text--white">{{ media.name }}</div>
+                    <div class="thumbText text-xs-left pl-1 subheading text--white">{{
+                      media.name }}</div>
                   </v-img>
 
                   <!-- <v-slide-y-transition>
@@ -60,65 +61,18 @@
 
     </v-container>
 
-    <!-- <v-container fluid
-                 class="grey lighten-3"
-                 height="300px"
-                 justify-center>
-      <v-layout row
-                align-content-center>
-
-        <v-flex xs12
-                px-2
-                pb-5
-                mb-5>
-
-          <swiper :options="swiperOption"
-                  class="pt-5 pb-5">
-            <swiper-slide v-for="(item, index) in swiperSlides"
-                          :key="index">
-              <v-flex xs12
-                      px-2
-                      pb-5
-                      mb-5>
-                <div class="tile">
-                  <div class="">
-                    <img :src="item.src" />
-                    <div class="text"
-                         style="width: 100%;">
-                      <h1>{{item.name}}</h1>
-                      <h2 class="animate-text">{{item.description}}</h2>
-                      <v-btn absolute
-                             class=" dots transparent white--text"
-                             fab
-                             flat
-                             right
-                             top>
-                        <v-icon>more_vert</v-icon>
-                      </v-btn>
-                    </div>
-                  </div>
-                </div>
-
-              </v-flex>
-            </swiper-slide>
-            <div class="swiper-button-prev"
-                 slot="button-prev"></div>
-            <div class="swiper-button-next"
-                 slot="button-next"></div>
-          </swiper>
-
-        </v-flex>
-      </v-layout>
-    </v-container> -->
   </v-content>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   computed: {
-    swiperSlides () {
-      return this.$store.getters.featuredPosts
-    }
+    ...mapGetters([
+      'loadedPosts'
+    ]
+    )
   },
   name: 'carrousel',
   data () {
