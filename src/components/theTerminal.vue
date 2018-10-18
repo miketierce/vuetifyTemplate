@@ -4,6 +4,8 @@
               fill-height
               align-end>
       <v-flex xs12>
+
+        <!-- <v-flex xs12>
         <v-flex xs12>
           <v-card fluid
                   height="auto">
@@ -42,7 +44,46 @@
             </v-text-field>
           </v-form>
         </v-flex>
+      </v-flex> -->
+
+        <v-flex xs12>
+          <v-btn @click="editing = !editing"
+                 block
+                 color="primary"
+                 dark>toggle editor</v-btn>
+
+          <v-flex xs12
+                  v-if="editing">
+
+            <v-textarea class="mt-1"
+                        v-model="input"
+                        :value="update"
+                        full-width
+                        auto-grow
+                        hide-details
+                        solo-inverted>
+            </v-textarea>
+
+          </v-flex>
+
+          <v-flex xs12
+                  v-if="!editing">
+            <v-card fluid
+                    max-height="auto"
+                    height="300px">
+
+              <v-card-text v-html="compiledMarkdown">
+                <!-- <h2>Viewing</h2> -->
+
+              </v-card-text>
+
+            </v-card>
+          </v-flex>
+
+        </v-flex>
+
       </v-flex>
+
     </v-layout>
   </v-content>
 </template>
@@ -53,10 +94,15 @@ export default {
     return {
       terminalEntry: '',
       presentCommand: '',
-      exportObject: []
+      exportObject: [],
+      input: '',
+      editing: false
     }
   },
   computed: {
+    compiledMarkdown: function () {
+      return marked(this.input, { sanitize: true })
+    }
     // exportObject () {
     //   let obj = []
     //   obj.push({
@@ -66,6 +112,9 @@ export default {
     // }
   },
   methods: {
+    update: _.debounce(function (e) {
+      this.input = e.target.value
+    }, 300),
     terminalCommand () {
       const payload = {
         ...this.exportObject,
@@ -80,5 +129,38 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+html,
+body,
+#editor {
+  margin: 0;
+  height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: #333;
+}
+
+textarea,
+#editor div {
+  display: inline-block;
+  width: 49%;
+  height: 100%;
+  vertical-align: top;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+
+textarea {
+  border: none;
+  border-right: 1px solid #ccc;
+  resize: none;
+  outline: none;
+  background-color: #f6f6f6;
+  font-size: 14px;
+  font-family: "Monaco", courier, monospace;
+  padding: 20px;
+}
+
+code {
+  color: #f66;
+}
 </style>

@@ -11,6 +11,8 @@ import postView from './views/postView'
 import studioView from './views/studioView.vue'
 import store from './store'
 import galleryView from './views/galleryView.vue'
+import keymakerPlayerView from './views/keymakerPlayerView.vue'
+import keymaker from './views/keymaker.vue'
 
 Vue.use(Router)
 
@@ -30,6 +32,17 @@ export default new Router({
     path: '/galleryView/:uid',
     name: 'galleryView',
     component: galleryView,
+    props: true
+  },
+  {
+    path: '/keymaker',
+    name: 'keymaker',
+    component: keymaker
+  },
+  {
+    path: '/keymakerPlayerView/:id',
+    name: 'keymakerPlayerView',
+    component: keymakerPlayerView,
     props: true
   },
   {

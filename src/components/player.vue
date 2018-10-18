@@ -4,9 +4,10 @@
     <v-layout justify-start
               column
               fill-height>
-      <v-flex xs12>
-        <playerWindow v-if="videoLoaded"
-                      v-bind:videoUrl="videoUrl" />
+      <v-flex xs12
+              v-if="videoLoaded">
+        <!-- {{loadedPost}} -->
+        <playerWindow v-bind:videoUrl="videoUrl" />
         <clipper v-if="loadedPost.postType != 'Clip'"
                  v-bind:id="id" />
       </v-flex>
@@ -20,6 +21,7 @@ import playerWindow from '@/components/playerWindow'
 
 export default {
   mounted () {
+    // this.loadedPost()
     // this.$store.dispatch('setVideoLoaded', true)
   },
   // props: ['id'],

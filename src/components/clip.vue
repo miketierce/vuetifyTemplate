@@ -23,7 +23,7 @@
       <v-layout row>
         <v-flex xs12>
           <div>Recording: {{recordingLength | timeInHours }}</div>
-          <!-- <div>Duration: {{clipTime}}</div> -->
+          <div>Duration: {{clipTime}}</div>
           <!-- <div>Clip Start: {{clippedStartTime}}</div> -->
           <!-- <div>Clip Calc Start: {{clipCalcStartTime}}</div> -->
           <!-- <div>Clip End: {{clippedStopTime}}</div> -->
