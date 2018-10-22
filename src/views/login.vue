@@ -31,9 +31,6 @@
 </template>
 
 <script>
-import register from '@/components/signUp.vue'
-import signIn from '@/components/signIn.vue'
-import gridTest from '@/components/gridTest.vue'
 
 export default {
   data: () => ({
@@ -42,21 +39,19 @@ export default {
       {
         header: 'Login',
         id: 'LoginForm',
-        component: 'Login'
+        component: 'signIn'
       },
       {
         header: 'Register',
         id: 'Register',
-        component: 'Register'
+        component: 'register'
       }
     ],
     activeUser: false,
     drawer: null
   }),
   components: {
-    register,
-    signIn,
-    gridTest
+
   },
   props: {
     source: String

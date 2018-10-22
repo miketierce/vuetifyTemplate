@@ -44,7 +44,11 @@
         <router-link to="/"
                      tag="span"
                      style="cursor: pointer">
-          <v-icon color="primary">tv</v-icon>&nbsp;STV
+          <v-btn flat>
+            Template
+            <v-icon right
+                    color="primary">tv</v-icon>
+          </v-btn>
         </router-link>
       </v-toolbar-title>
     </v-toolbar>

@@ -20,8 +20,18 @@ import axios from 'axios'
 import VueVideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 import round from 'vue-round-filter'
-
 // import VueYouTubeEmbed from 'vue-youtube-embed'
+// component library
+import navBar from '@/components/navBar.vue'
+import register from '@/components/signUp.vue'
+import signIn from '@/components/signIn.vue'
+import gridTest from '@/components/gridTest.vue'
+
+Vue.component('register', register)
+Vue.component('signIn', signIn)
+Vue.component('gridTest', gridTest)
+
+Vue.component('navBar', navBar)
 
 Vue.use(VueVideoPlayer, {
   options: global,
@@ -96,18 +106,18 @@ new Vue({
   created () {
     firebase.initializeApp({
       // firebase api credentails here
-      apiKey: 'AIzaSyDpokfUZDzgek949X577pHsu9co_5UVLuY',
-      authDomain: 'stv-app.firebaseapp.com',
-      databaseURL: 'https://stv-app.firebaseio.com',
-      projectId: 'stv-app',
-      storageBucket: '',
-      messagingSenderId: '429505354237'
+      apiKey: 'AIzaSyA25P5qhWvt10Gmrg5z2EPAPcr-hIkTAcU',
+      authDomain: 'vuetifytemplate.firebaseapp.com',
+      databaseURL: 'https://vuetifytemplate.firebaseio.com',
+      projectId: 'vuetifytemplate',
+      storageBucket: 'vuetifytemplate.appspot.com',
+      messagingSenderId: '481077198060'
     })
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.dispatch('autoSignIn', user)
       }
     })
-    this.$store.dispatch('loadVideoPosts')
+    this.$store.dispatch('atStart')
   }
 }).$mount('#app')

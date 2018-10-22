@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import navBar from '@/components/navBar.vue'
+
 export default {
   watch: {
     $route (to, from) {
@@ -23,22 +23,22 @@ export default {
     }
   },
   components: {
-    navBar
+
   },
   name: 'App',
   data () {
     return {
-      clipped: true,
-      drawer: false,
-      fixed: false,
-      items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire'
-      }],
-      miniVariant: false,
-      right: false,
-      rightDrawer: false,
-      title: 'Sovereignty TV'
+      // clipped: true,
+      // drawer: false,
+      // fixed: false,
+      // items: [{
+      //   icon: 'bubble_chart',
+      //   title: 'Inspire'
+      // }],
+      // miniVariant: false,
+      // right: false,
+      // rightDrawer: false,
+      // title: 'Sovereignty TV'
     }
   }
 }
